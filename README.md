@@ -9,3 +9,4 @@ I fuck up and run out of letters too quickly.
 
 *Okay, emergency modification, deferring esolangs unless it's really cool*
 * Day 3: C, C++
+* Day 4: C-Sharp, Clojure
