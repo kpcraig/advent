@@ -10,4 +10,8 @@ you might be able to tell from the beginning, I tried to do this mostly alphabet
 *Okay, emergency modification, deferring esolangs unless it's really cool*
 * Day 3: C, C++
 * Day 4: C-Sharp, Clojure
-* Day 5: COBOL
+* Day 5: COBOL, Coffeescript
+
+Contributions are welcomed for any problem already solved, especially for code elegance fixes. I
+apologize for being a couple days behind; it can take some time to track down compilers or interpreters
+for the older languages!
