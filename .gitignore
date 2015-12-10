@@ -1,2 +1,5 @@
 *.dylib
+# Ignore the official input and also my sample (test) inputs
 input
+simple
+sample
