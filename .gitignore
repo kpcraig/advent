@@ -1,4 +1,5 @@
 *.dylib
+*.beam
 # Ignore the official input and also my sample (test) inputs
 input
 simple
