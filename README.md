@@ -11,8 +11,7 @@ you might be able to tell from the beginning, I tried to do this mostly alphabet
 * Day 3: C, C++
 * Day 4: C-Sharp, Clojure
 * Day 5: COBOL, Coffeescript
-* Day 6: D, Eiffel
-* Day 7: Erlang
+* Day 6: D, Dart
 
 Contributions are welcomed for any problem already solved, especially for code elegance fixes. I
 apologize for being a couple days behind; finding 50 different languages requires something of a deep
