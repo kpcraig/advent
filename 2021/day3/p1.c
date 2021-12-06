@@ -50,4 +50,6 @@ int main() {
     }
 
     printf("gamma: %d\nepsilon: %d\npower: %d\n", gamma, epsilon, gamma * epsilon);
+
+    fclose(fd);
 }
