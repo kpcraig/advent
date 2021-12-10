@@ -1,28 +1,14 @@
 highest := 9999
-
 a := List clone
-// a append(List clone append(1,2,3), List clone append(4,5,6))
-// 2199943210
-// 3987894921
-// 9856789892
-// 8767896789
-// 9899965678
-// a append(
-//     List clone append(2,1,9,9,9,4,3,2,1,0),
-//     List clone append(3,9,8,7,8,9,4,9,2,1),
-//     List clone append(9,8,5,6,7,8,9,8,9,2),
-//     List clone append(8,7,6,7,8,9,6,7,8,9),
-//     List clone append(9,8,9,9,9,6,5,6,7,8)
-// )
+
 f := File with("input") openForReading
 loop(
     s := f readLine
     t := List clone
     if(s == nil, break)
-    s foreach(i, c, t append(c - 48))
+    s foreach(i, c, t append(c - 48)) // -48 converts from ascii to digit
     a append(t)
 )
-// writeln(a)
 sum := 0
 
 up := 0
