@@ -15,8 +15,8 @@ Also, this is going to get real annoying when I have to write a high 20s advent 
 * H - Haskell
 * I - Io
 * J - Java
+* K - Kotlin
 ---------
-* K - Kotlin?
 * L - Lua or Lisp?
 * M - MATLAB???
 * N - Nim?
