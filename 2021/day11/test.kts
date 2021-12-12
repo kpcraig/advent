@@ -45,12 +45,18 @@ fun main() {
     var f = 0
     val size = grid.size * grid[0].size
     var gen = 1
+    val targetGen = 100
     while(true) {
         val fi = generate(grid)
         f += fi
+        if(gen == targetGen) {
+            println("$f flashes by $targetGen")
+        }
         if(fi == size) {
             println("all flashed on $gen")
-            break
+            if(gen >= targetGen) {
+                break;
+            }
         }
         gen++
 //        println("$i: $fi: $size")
