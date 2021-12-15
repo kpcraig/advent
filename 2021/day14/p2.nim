@@ -1,6 +1,3 @@
-#[
-comment test
-#]#
 import std/re
 import std/tables
 # import std/sequtils
