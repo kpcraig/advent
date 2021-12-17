@@ -23,6 +23,12 @@ class Packet:
         else:
             self.value = [packet]
     
+    def sum(self):
+        if type(self.value) is list:
+            return self.version + sum([x.sum() for x in self.value])
+        else:
+            return self.version
+        # return self.version + sum([x.sum() for x in self.value if type(self.value) is list])
 
 class FakeBitReader:
     def __init__(self, filename):
@@ -67,17 +73,12 @@ class FakeBitReader:
         # print("ate {:x}".format(bt))
         return bt
 
-global versionExt
-
 ### Reads a packet, assuming the fake bit reader is at the start of one
 def parsePacket(fbr):
-    global versionExt
 
     version = fbr.readBits(3)
     id = fbr.readBits(3)
     packetLength = 6
-
-    versionExt += version
 
     p = Packet(version, id)
 
@@ -114,7 +115,6 @@ def parsePacket(fbr):
         else:
             length = fbr.readBits(11)
             packetLength+=11
-            print("expecting {} packets, directly".format(length))
             # this length is the number of subpackets directly
             for _ in range(length):
                 (pk,l) = parsePacket(fbr)
@@ -133,29 +133,11 @@ def isValid(c):
 
 def main():
     f = open(filename) # read/text implied
-    global versionExt
-    versionExt = 0
-    
-    # there should be one (really long) line that we can process one character at a time
-    # c = f.read(1)
-    # while isValid(c):
-    #     b = int(c,16)
-    #     print(b)
-    #     c = f.read(1)
+
     br = FakeBitReader(filename)
 
-    #   2    0    5    6
-    #0010 0000 0101 0110 
-    # v = br.readBits(3)
-    # print(br.buf)
-    # w = br.readBits(6)
-    # print(br.buf)
-    # x = br.readBits(3)
-    # print(v,w,x)
-    # expecting... 1 0 5
     (p, l) = parsePacket(br)
 
-    print(p, l)
-    print(versionExt)
+    print(p.sum())
 
 main()
