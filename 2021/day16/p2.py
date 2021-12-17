@@ -37,11 +37,9 @@ class Packet:
                 return total
             elif self.id == 2:
                 # minimum
-                vs = [v.evaluate() for v in self.value]
-                return min(vs)
+                return min([v.evaluate() for v in self.value])
             elif self.id == 3:
-                vs = [v.evaluate() for v in self.value]
-                return max(vs)
+                return max([v.evaluate() for v in self.value])
             elif self.id == 5:
                 # 1 if first packet is bigger
                 v1 = self.value[0].evaluate()
@@ -65,11 +63,9 @@ class FakeBitReader:
         self.f = open(filename)
         self.buf = self.__readAsIfByte__()
         self.remaining = 8
-        # print(self.buf)
     
     def readBits(self, count):
         if self.remaining > count:
-            # print("remaining and count", self.remaining, count)
             rem = self.remaining - count
             answer = self.buf >> rem
             if rem > 0:
@@ -79,7 +75,6 @@ class FakeBitReader:
                 # Say we had seven bytes: [_ 1 0 1 1 0 0 1]
                 # we request 3, so rem is 4
                 self.remaining = rem
-                # print("remaining after eating", rem)
                 mask = 0xFF >> (8 - rem)
                 self.buf = self.buf & mask
             else:
@@ -99,9 +94,7 @@ class FakeBitReader:
         self.remaining = 8
 
     def __readAsIfByte__(self):
-        bt = int(self.f.read(2),16)
-        # print("ate {:x}".format(bt))
-        return bt
+        return int(self.f.read(2),16)
 
 ### Reads a packet, assuming the fake bit reader is at the start of one
 def parsePacket(fbr):
@@ -116,7 +109,6 @@ def parsePacket(fbr):
         value = 0
         flag = fbr.readBits(1)
         packetLength+=1
-        # print("read {:b}".format(flag))
         while flag == 1:
             value = value + fbr.readBits(4)
             value = value << 4
@@ -145,7 +137,6 @@ def parsePacket(fbr):
         else:
             length = fbr.readBits(11)
             packetLength+=11
-            print("expecting {} packets, directly".format(length))
             # this length is the number of subpackets directly
             for _ in range(length):
                 (pk,l) = parsePacket(fbr)
@@ -155,9 +146,6 @@ def parsePacket(fbr):
 
     return (p, packetLength)
     
-    
-
-
 def isValid(c):
     return c != "" and c != "\n" and c != " "
 
@@ -166,25 +154,11 @@ def main():
     f = open(filename) # read/text implied
 
     # there should be one (really long) line that we can process one character at a time
-    # c = f.read(1)
-    # while isValid(c):
-    #     b = int(c,16)
-    #     print(b)
-    #     c = f.read(1)
     br = FakeBitReader(filename)
 
-    #   2    0    5    6
-    #0010 0000 0101 0110 
-    # v = br.readBits(3)
-    # print(br.buf)
-    # w = br.readBits(6)
-    # print(br.buf)
-    # x = br.readBits(3)
-    # print(v,w,x)
-    # expecting... 1 0 5
     (p, l) = parsePacket(br)
 
-    print(p, l)
+    # print(p, l)
     print(p.evaluate())
 
 main()
