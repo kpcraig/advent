@@ -7,10 +7,8 @@ def main():
     overlap = 0
     for line in fd:
         pairs = line.split(",")
-        e1_range_raw = pairs[0].split("-")
-        e2_range_raw = pairs[1].split("-")
-        e1_range = [int(x) for x in e1_range_raw]
-        e2_range = [int(x) for x in e2_range_raw]
+        e1_range = [int(x) for x in pairs[0].split("-")]
+        e2_range = [int(x) for x in pairs[1].split("-")]
         smaller = []
         larger = []
         if e1_range[1] - e1_range[0] < e2_range[1] - e2_range[0]:
@@ -25,8 +23,8 @@ def main():
         if smaller[0] <= larger[1] and larger[0] <= smaller[1]:
             overlap+=1
         
-    print(subsume)
-    print(overlap)
+    print("subsumed ranges:", subsume)
+    print("overlapping pairs:", overlap)
         
 
 main()
