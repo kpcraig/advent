@@ -11,4 +11,4 @@ Somewhat arbitrarily, I have picked:
 - Ruby
 - Rust
 
-This gets us through 24 days, and I roughly have the plan to do two wildcard languages at the end.
+This gets us through 24 days, and I roughly have the plan to do some weird wildcard language at the end.
