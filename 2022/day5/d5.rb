@@ -1,3 +1,4 @@
+# This one is kind of cheaty - you invoke it with 3 args, height of tallest stack, width of stacks, and 1 or 2 depending on part
 def main
     stacklines = ARGV[1].to_i # do we think this is cheating
     stackwidth = ARGV[2].to_i # what about this
