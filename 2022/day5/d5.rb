@@ -1,32 +1,38 @@
 # This one is kind of cheaty - you invoke it with 3 args, height of tallest stack, width of stacks, and 1 or 2 depending on part
 def main
-    stacklines = ARGV[1].to_i # do we think this is cheating
-    stackwidth = ARGV[2].to_i # what about this
-    problem = ARGV[3].to_i
-    stacks = Array.new(stackwidth)
-    # for i in (0..stackwidth-1) do
-    #     stacks[i] = Array.new(0)
-    # end
-    File.open(ARGV[0]).each_with_index do |line,line_num|
-        # 2, 6, 10, every 4
-        if line_num < stacklines
+    problem = ARGV[1].to_i
+    stacks_desc = Array.new
+    stacks = Array.new
+    state = :begin
+    File.open(ARGV[0]).each_with_index do |line,line_num |
+        if state == :begin
             sz = line.length
-            for i in (2..sz).step(4) do
-                idx = (i - 2) / 4
-                # puts "appending #{line[i-1]} to #{idx}"
-                letter = line[i-1]
-                if letter != ' '
-                    (stacks[idx] ||= []) << letter
-                end
+            if not line.include?('[')
+                # this is the footer line
+                stack_width = ((sz - 2) / 4) + 1
+                stacks = Array.new(stack_width)
+                state = :build
+                next
             end
-        elsif line_num == stacklines
-            # do this once
-            for i in (0..stackwidth-1) do
-                stacks[i] = stacks[i].reverse
-            end
-        elsif line_num < stacklines + 2
-            # no op
-        else
+            stacks_desc << line
+
+        elsif state == :build
+            stacks_desc.each { |line|
+                sz = line.length
+                # 2, 6, 10, every 4
+                (2..sz).step(4).each { |i|
+                    idx = (i - 2) / 4
+                    letter = line[i-1]
+                    if letter != ' '
+                        (stacks[idx] ||= []) << letter
+                    end
+                }
+            }
+            stacks.each_with_index { |stack, i|
+                stacks[i] = stack.reverse
+            }
+            state = :move
+        else # state == :move
             # reading movements
             # puts line
             matches = line.match(/move (\d+) from (\d+) to (\d+)/)
@@ -38,14 +44,17 @@ def main
             else
                 blocks = stacks[start-1].pop(count)
             end
-            puts "moving #{blocks} from #{start} to #{target}"
             stacks[target-1].concat(blocks)
         end
     end
 
-    for i in (0..stackwidth-1) do
-        puts stacks[i].last
-    end
+    result = ""
+
+    stacks.each { |stack|
+        result.concat(stack.last)
+    }
+
+    puts result
 end
 
 main()
