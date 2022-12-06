@@ -1,4 +1,3 @@
-# This one is kind of cheaty - you invoke it with 3 args, height of tallest stack, width of stacks, and 1 or 2 depending on part
 def main
     problem = ARGV[1].to_i
     stacks_desc = Array.new
