@@ -86,7 +86,7 @@ struct directory* find_child(char* name, struct directory* children, size_t sz) 
 int main() {
   // the bulk of this code is STOLEN from MYSELF from LAST YEAR, and now also THIS YEAR
 
-  FILE* fd = fopen("/Users/kpcraig/workspace/advent/2022/day7/input", "r"); // open input for reading
+  FILE* fd = fopen("input", "r"); // open input for reading
 
   // this is advent of code, so assume there are values and assume the input is correct
   char* line = NULL;
