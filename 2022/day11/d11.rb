@@ -14,13 +14,13 @@ def main
 
   val_lcm = 1
 
-  File.open(filename).each_with_index do |line |
+  File.open(filename).each do |line|
     line_trim = line.strip
     next if line_trim == ''
     lines.append(line_trim)
   end
 
-  (0..lines.length - 1).step(6).each { |i|
+  (0..lines.length - 1).step(6).each do |i|
     monkey_num = i / 6
 
     # line + 1 is items
@@ -58,17 +58,13 @@ def main
     false_monkey = matches[1].to_i
 
     monkeys[monkey_num] = Monkey.new(items, operation, test, true_monkey, false_monkey)
-  }
+  end
 
-  round_count = if prob_num == 1
-                  20
-                else
-                  10000
-                end
+  round_count = if prob_num == 1 then 20 else 10000 end
 
   # 20 rounds do |m|
   (1..round_count).each do
-    monkeys.each do |m |
+    monkeys.each do |m|
       # puts "Monkey #{i}:"
       while m.size > 0 do
         item = m.get
@@ -76,11 +72,7 @@ def main
         item = m.do_operation(item)
         # puts "    Worry level is now #{item}"
         # we calm down
-        if prob_num == 1
-          item = item / 3
-        else
-          item = item % val_lcm
-        end
+        item = if prob_num == 1 then item / 3 else item % val_lcm end
         # puts "    Monkey gets bored with item. Worry level is divided by 3 to #{item}"
         # check
         t = m.target(item)
@@ -93,7 +85,7 @@ def main
   # monkeys.each_with_index { |m, i| puts "Monkey #{i} inspected items #{m.inspect_count} times." }
   first = 0
   second = 0
-  monkeys.each do |m |
+  monkeys.each do |m|
     if m.inspect_count > first
       second = first
       first = m.inspect_count
