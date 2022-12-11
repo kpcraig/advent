@@ -14,13 +14,13 @@ def main
 
   val_lcm = 1
 
-  File.open(filename).each_with_index do |line,line_num |
+  File.open(filename).each_with_index do |line |
     line_trim = line.strip
     next if line_trim == ''
     lines.append(line_trim)
   end
 
-  (0..lines.length() - 1).step(6).each { |i|
+  (0..lines.length - 1).step(6).each { |i|
     monkey_num = i / 6
 
     # line + 1 is items
@@ -29,15 +29,15 @@ def main
 
     # line + 2 is operation
     matches = lines[i+2].match(operation_match)
-    if matches[1] == '+' then
-      if matches[2] == 'old' then
+    if matches[1] == '+'
+      if matches[2] == 'old'
         operation = lambda {|val| val + val}
       else
         value = matches[2].to_i
         operation = lambda {|val| val + value}
       end
     else
-      if matches[2] == 'old' then
+      if matches[2] == 'old'
         operation = lambda {|val| val * val}
       else
         value = matches[2].to_i
@@ -60,23 +60,23 @@ def main
     monkeys[monkey_num] = Monkey.new(items, operation, test, true_monkey, false_monkey)
   }
 
-  round_count = if prob_num == 1 then
+  round_count = if prob_num == 1
                   20
                 else
                   10000
                 end
 
   # 20 rounds do |m|
-  (1..round_count).each do |i|
-    monkeys.each_with_index do |m, i|
+  (1..round_count).each do
+    monkeys.each do |m |
       # puts "Monkey #{i}:"
-      while m.size() > 0 do
+      while m.size > 0 do
         item = m.get
         # puts "  Monkey inspects an item with a worry level of #{item}"
         item = m.do_operation(item)
         # puts "    Worry level is now #{item}"
         # we calm down
-        if prob_num == 1 then
+        if prob_num == 1
           item = item / 3
         else
           item = item % val_lcm
@@ -93,7 +93,7 @@ def main
   # monkeys.each_with_index { |m, i| puts "Monkey #{i} inspected items #{m.inspect_count} times." }
   first = 0
   second = 0
-  monkeys.each_with_index do |m, i|
+  monkeys.each do |m |
     if m.inspect_count > first
       second = first
       first = m.inspect_count
@@ -118,11 +118,11 @@ class Monkey
   end
 
   def inspect_count
-    return @inspect
+    @inspect
   end
 
   def do_operation(item)
-    return @operation.call(item)
+    @operation.call(item)
   end
 
   # pop inspects an item, and removes it from the list of items.
@@ -133,7 +133,7 @@ class Monkey
     item = @items.pop
     @items = @items.reverse
 
-    return item
+    item
   end
 
   def push(item)
@@ -144,14 +144,14 @@ class Monkey
   def target(worry)
     check = @test.call(worry)
     if check
-      return @tm
+      @tm
     else
-      return @fm
+      @fm
     end
   end
 
   def size
-    return @items.length()
+    @items.length
   end
 end
 
