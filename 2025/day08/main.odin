@@ -33,7 +33,8 @@ main :: proc() {
     append(&boxen, box)
 	}
 
-  fmt.printf("%d\n", len(boxen))
+  fmt.printf("args: %s, %d\n", name, joins)
+  fmt.printf("boxen: %d\n", len(boxen))
 
   // do naive grouping
   direct_pairs := make(map[[2]int]bool)
@@ -60,7 +61,7 @@ main :: proc() {
     direct_pairs[[2]int{first_box, second_box}] = true
     if first_circuit != 0 && first_circuit == second_circuit {
       join_count += 1
-      if join_count >= joins {
+      if joins != -1 && join_count >= joins {
         break
       }
       continue
@@ -94,9 +95,20 @@ main :: proc() {
     for box in boxen {
       cs[box.circuit] += 1
     }
-    fmt.printf("%v\n", cs)
+    fmt.printf("circuits: %v\n", cs)
+    found := false
+    for c in cs[1:] {
+      if joins == -1 && c == len(boxen) {
+        fmt.printf("last boxes %v and %v: %d\n", boxen[first_box], boxen[second_box], boxen[first_box].loc[0] * boxen[second_box].loc[0])
+        found = true
+      }
+    }
+    if found {
+      break
+    }
+
     join_count += 1
-    if join_count >= joins {
+    if joins != -1 && join_count >= joins {
       break
     }
   }
